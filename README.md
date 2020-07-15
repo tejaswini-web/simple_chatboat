@@ -1,82 +1,52 @@
-# simple_chatboat
-import io
-import random
-import string # to process standard python strings
-import warnings
-import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import warnings
-warnings.filterwarnings('ignore')
-In [2]:
+# Building a Simple Chatbot from Scratch in Python (using NLTK)
+
+![Alt text](https://cdn-images-1.medium.com/max/800/1*pPcVfZ7i-gLMabUol3zezA.gif)
+
+History of chatbots dates back to 1966 when a computer program called ELIZA was invented by Weizenbaum. It imitated the language of a psychotherapist from only 200 lines of code. You can still converse with it here: [Eliza](http://psych.fullerton.edu/mbirnbaum/psych101/Eliza.htm?utm_source=ubisend.com&utm_medium=blog-link&utm_campaign=ubisend). 
+
+On similar lines let's create a very basic chatbot utlising the Python's NLTK library.It's a very simple bot with hardly any cognitive skills,but still a good way to get into NLP and get to know about chatbots.
+
+
+# Outline
+* [Motivation](#motivation)
+* [Blogpost](#blogpost)
+* [Pre-requisites](#pre-requisites)
+* [How to run](#how-to-run)
+
+
+## Motivation
+The idea of this project was not to create some SOTA chatbot with exceptional cognitive skills but just to utilise and test my Python skills.This was one of my very first projects, created  when I just stepped into the world of NLP and I thought of creating a simple chatbot just to make use of my newly acquired knowledge.
+
+## BlogPost
+For detailed overview, here is the accompanying blog titled:**[Building a Simple Chatbot in Python (using NLTK)](https://medium.com/analytics-vidhya/building-a-simple-chatbot-in-python-using-nltk-7c8c8215ac6e)**
+
+
+## Pre-requisites
+**NLTK(Natural Language Toolkit)**
+
+[Natural Language Processing with Python](http://www.nltk.org/book/) provides a practical introduction to programming for language processing.
+
+For platform-specific instructions, read [here](https://www.nltk.org/install.html)
+
+### Installation of NLTK
+```
 pip install nltk
-Requirement already satisfied: nltk in c:\users\win\anaconda3\lib\site-packages (3.4.5)
-Requirement already satisfied: six in c:\users\win\anaconda3\lib\site-packages (from nltk) (1.12.0)
-Note: you may need to restart the kernel to use updated packages.
-In [ ]:
+```
+### Installing required packages
+After NLTK has been downloaded, install required packages
+```
 import nltk
 from nltk.stem import WordNetLemmatizer
-nltk.download('popular', quiet=True) # for downloading packages
-#nltk.download('punkt') # first-time use only
-#nltk.download('wordnet') # first-time use only
-In [ ]:
-f=open('tejaswinichatboatsent_tokens = nltk.sent_tokenize(raw)# converts to list of sentences 
-word_tokens = nltk.word_tokenize(raw)# converts to list of words.txt','r',errors = 'ignore')
-raw=f.read()
-raw = raw.lower()# converts to lowercase
-In [ ]:
+nltk.download('popular', quiet=True) # for downloading popular packages
+nltk.download('punkt') 
+nltk.download('wordnet') 
+```
 
-In [ ]:
-lemmer = nltk.stem.WordNetLemmatizer()
-#WordNet is a semantically-oriented dictionary of English included in NLTK.
-def LemTokens(tokens):
-    return [lemmer.lemmatize(token) for token in tokens]
-remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
+## How to run
+* Jupyter Notebook [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/parulnith/Building-a-Simple-Chatbot-in-Python-using-NLTK/master)
 
-def LemNormalize(text):
-    return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
-In [ ]:
-GREETING_INPUTS = ("hello", "hi", "greetings", "sup", "what's up","hey",)
-GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
-def greeting(sentence):
- 
-    for word in sentence.split():
-        if word.lower() in GREETING_INPUTS:
-            return random.choice(GREETING_RESPONSES)
-In [ ]:
-def response(user_response):
-    robo_response=''
-    sent_tokens.append(user_response)
-    TfidfVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
-    tfidf = TfidfVec.fit_transform(sent_tokens)
-    vals = cosine_similarity(tfidf[-1], tfidf)
-    idx=vals.argsort()[0][-2]
-    flat = vals.flatten()
-    flat.sort()
-    req_tfidf = flat[-2]
-    if(req_tfidf==0):
-        robo_response=robo_response+"I am sorry! I don't understand you"
-        return robo_response
-    else:
-        robo_response = robo_response+sent_tokens[idx]
-        return robo_response
-In [ ]:
-flag=True
-print("ROBO: My name is Robo. I will answer your queries about Chatbots. If you want to exit, type Bye!")
-while(flag==True):
-    user_response = input()
-    user_response=user_response.lower()
-    if(user_response!='bye'):
-        if(user_response=='thanks' or user_response=='thank you' ):
-            flag=False
-            print("ROBO: You are welcome..")
-        else:
-            if(greeting(user_response)!=None):
-                print("ROBO: "+greeting(user_response))
-            else:
-                print("ROBO: ",end="")
-                print(response(user_response))
-                sent_tokens.remove(user_response)
-    else:
-        flag=False
-        print("ROBO: Bye! take care..")
+You can run the [chatbot.ipynb](https://github.com/parulnith/Building-a-Simple-Chatbot-in-Python-using-NLTK/blob/master/Chatbot.ipynb) which also includes step by step instructions.
+* Through Terminal
+```
+python chatbot.py
+```
